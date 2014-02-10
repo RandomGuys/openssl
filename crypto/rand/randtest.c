@@ -75,7 +75,15 @@ int main(int argc,char **argv)
 	/*double d; */
 	long d;
 
-	i = RAND_bytes(buf,1000000);
+	int test;
+	for (test = 0; test < 2; test++) {
+		if (test == 0) {
+			printf ("Testing RAND_bytes...\n");
+			i = RAND_bytes(buf,1000000);
+		} else {
+			printf ("Testint RAND_query_egd_bytes...\n");
+			i = RAND_query_egd_bytes ("/var/run/egd-pool", buf, 1000000);
+		}
 	if (i < 0)
 		{
 		printf ("init failed, the rand method is not properly installed\n");
@@ -209,6 +217,7 @@ int main(int argc,char **argv)
 		err++;
 		}
 	printf("test 4 done\n");
+	}
  err:
 	err=((err)?1:0);
 #ifdef OPENSSL_SYS_NETWARE
@@ -216,4 +225,4 @@ int main(int argc,char **argv)
 #endif
 	EXIT(err);
 	return(err);
-	}
+}
